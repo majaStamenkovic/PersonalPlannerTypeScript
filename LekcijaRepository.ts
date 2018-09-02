@@ -16,9 +16,9 @@ export class LekcijaRepository extends RepositoryBase<ILekcijaModel>{
         return <ILekcijaModel[]> nesto;
     }
 
-    async vratiJednu(object:Object):Promise<ILekcijaModel>{
-        let nesto = await this.findOne(object);
-        return <ILekcijaModel> nesto;
+    async vratiJednu(lekcijaID:ObjectID):Promise<ILekcijaModel>{
+        let lekcija = await this.findOne(lekcijaID);
+        return <ILekcijaModel> lekcija;
     }
 
     async ubaci(novi: ILekcijaModel):Promise<ILekcijaModel>{

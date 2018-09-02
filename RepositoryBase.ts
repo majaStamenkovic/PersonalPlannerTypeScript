@@ -21,8 +21,8 @@ export class RepositoryBase<T extends Document>{
         return promise;
     }
 
-    protected findOne(criteria: Object = {}): Promise<T> {
-
+    protected findOne(objectID:ObjectID): Promise<T> {
+        let criteria ={_id: objectID};
         let promise = new Promise<T>((resolve, reject) => {
             this._model.findOne(criteria, ((error, data) => {
                 if (error) {

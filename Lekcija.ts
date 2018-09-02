@@ -30,4 +30,14 @@ export class Lekcija{
     set brojLekcije(brojLekcije:number){
         this._lekcijaModel.brojLekcije = brojLekcije;
     }
+    get lekcija():ILekcijaModel{
+        return this._lekcijaModel;
+    }
+    public static createLekcija(nazivPredmeta:string,tipLekcije:string,brojLekcije:number):ILekcijaModel{
+        return <ILekcijaModel>{
+            nazivPredmeta: nazivPredmeta,
+            tipLekcije: tipLekcije,
+            brojLekcije: brojLekcije
+        }
+    }
 }
