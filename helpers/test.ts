@@ -1,6 +1,6 @@
-import { Lekcija } from "./Lekcija";
-import { ILekcijaModel } from "./ILekcijaModel"
-import {LekcijaRepository} from './LekcijaRepository'
+//import { Lekcija } from "./Lekcija";
+//import { ILekcijaModel } from "./ILekcijaModel"
+//import {LekcijaRepository} from './LekcijaRepository'
 import mongoose from "mongoose";
 import { ObjectID } from "bson";
 /*

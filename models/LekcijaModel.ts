@@ -1,5 +1,5 @@
 import {Schema, Document, model } from 'mongoose';
-import {ILekcijaModel} from './ILekcijaModel';
+import {ILekcijaModel} from './interfaces/ILekcijaModel';
 
 const TABLE_NAME = 'leka';
 const LekcijaSchema : Schema = new Schema({

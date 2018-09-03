@@ -1,8 +1,8 @@
 import {Request,Response,json} from 'express';
-import { LekcijaRepository } from '../LekcijaRepository';
-import { ILekcijaModel } from '../ILekcijaModel';
+import { LekcijaRepository } from '../repository/LekcijaRepository';
+import { ILekcijaModel } from '../models/interfaces/ILekcijaModel';
 import {ObjectID} from 'bson'
-import { Lekcija } from '../Lekcija';
+import { Lekcija } from '../business/Lekcija';
 
 export class LekcijaController{
 
@@ -75,11 +75,12 @@ export class LekcijaController{
         try{
             repo.obrisi(ObjectID.createFromHexString(lekcijaID))
             .then((data)=>res.send(data))
-            .catch((err)=>res.send({"error":"doslo je do greske"}))
+            .catch((err)=>res.send({"error":err.message}))
             
         } catch(e) {
-            console.log(e);
-            res.send({"error": "doslo je do greske"})
+            //console.log(e);
+            //Uhvatice npr ako nije prosledjen format koji odgovara ObjectID
+            res.send({"error": e.message})
         }
     }
 

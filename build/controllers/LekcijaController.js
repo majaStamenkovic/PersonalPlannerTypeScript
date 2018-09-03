@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const LekcijaRepository_1 = require("../LekcijaRepository");
+const LekcijaRepository_1 = require("../repository/LekcijaRepository");
 const bson_1 = require("bson");
-const Lekcija_1 = require("../Lekcija");
+const Lekcija_1 = require("../business/Lekcija");
 class LekcijaController {
     kreirajLekciju(req, res) {
         const repo = new LekcijaRepository_1.LekcijaRepository();
@@ -70,11 +70,12 @@ class LekcijaController {
         try {
             repo.obrisi(bson_1.ObjectID.createFromHexString(lekcijaID))
                 .then((data) => res.send(data))
-                .catch((err) => res.send({ "error": "doslo je do greske" }));
+                .catch((err) => res.send({ "error": err.message }));
         }
         catch (e) {
-            console.log(e);
-            res.send({ "error": "doslo je do greske" });
+            //console.log(e);
+            //Uhvatice npr ako nije prosledjen format koji odgovara ObjectID
+            res.send({ "error": e.message });
         }
     }
 }

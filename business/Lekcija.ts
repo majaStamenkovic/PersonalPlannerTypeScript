@@ -1,4 +1,4 @@
-import {ILekcijaModel} from './ILekcijaModel'
+import {ILekcijaModel} from '../models/interfaces/ILekcijaModel'
 
 export class Lekcija{
     private _lekcijaModel : ILekcijaModel;

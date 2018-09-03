@@ -1,7 +1,7 @@
 import {RepositoryBase} from './RepositoryBase';
 import {Document, Model} from 'mongoose';
-import { ILekcijaModel } from './ILekcijaModel';
-import { LekcijaModel } from './LekcijaModel';
+import { ILekcijaModel } from '../models/interfaces/ILekcijaModel';
+import { LekcijaModel } from '../models/LekcijaModel';
 import { ObjectID } from 'bson';
 
 export class LekcijaRepository extends RepositoryBase<ILekcijaModel>{

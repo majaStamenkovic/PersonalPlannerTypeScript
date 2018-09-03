@@ -68,15 +68,16 @@ export class RepositoryBase<T extends Document>{
 
     protected delete(objectID:ObjectID){
         let promise = new Promise<T>(async (resolve, reject) => {
-            let object = await this._model.findOneAndRemove({_id:objectID}).exec();
-            if(object){
+            try{
+                let object = await this._model.findOneAndRemove({_id:objectID}).exec();
                 console.log('Uspesno obrisan');
                 resolve(object);
             }
-            else {
+            catch(e) {
                 console.log('Doslo je do greske prilikom brisanja objekta _id:',objectID);
                 reject();
             }
+            
         });
         return promise;
     }
