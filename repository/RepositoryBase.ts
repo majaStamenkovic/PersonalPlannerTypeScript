@@ -82,7 +82,7 @@ export class RepositoryBase<T extends Document>{
         return promise;
     }
 
-    protected update(objectID:ObjectID,novi:T):Promise<T>{
+    protected update(objectID:ObjectID,novi:object):Promise<T>{
         let promise = new Promise<T>(async (resolve, reject) => {
             let object = await this._model.findOneAndUpdate({_id:objectID},novi).exec();
             if(object){

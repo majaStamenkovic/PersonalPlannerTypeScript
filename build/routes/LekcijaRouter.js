@@ -12,8 +12,9 @@ class LekcijaRouter {
         router.get('/', controller.vratiSveLekcije);
         router.post('/', controller.kreirajLekciju);
         router.get('/:oid', controller.vratiLekciju);
-        router.put('/:oid', controller.dopuniLekciju);
+        router.put('/:oid', controller.izmeniLekciju);
         router.delete('/:oid', controller.obrisiLekciju);
+        router.patch('/:oid', controller.dopuniLekciju);
         return router;
     }
 }

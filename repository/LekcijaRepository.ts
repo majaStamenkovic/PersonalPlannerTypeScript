@@ -36,6 +36,10 @@ export class LekcijaRepository extends RepositoryBase<ILekcijaModel>{
         return izmenjenObjekat;
     }
     
+    async dopuniLekciju(objectID:ObjectID,izmena:object):Promise<ILekcijaModel>{
+        let izmenjenObjekat= this.update(objectID,{$set:izmena});
+        return izmenjenObjekat;
+    }
 
     /*
     private _model : Model<ILekcijaModel>;

@@ -45,5 +45,12 @@ class LekcijaRepository extends RepositoryBase_1.RepositoryBase {
             return izmenjenObjekat;
         });
     }
+    dopuniLekciju(objectID, izmena) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let izmenjenObjekat = this.update(objectID, { $set: izmena });
+            //let izmenjenObjekat = LekcijaModel.findOneAndUpdate(objectID,{$set:izmena}).exec();
+            return izmenjenObjekat;
+        });
+    }
 }
 exports.LekcijaRepository = LekcijaRepository;
