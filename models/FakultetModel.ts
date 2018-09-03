@@ -1,8 +1,8 @@
 import {Schema, Document, model } from 'mongoose';
-import {ILekcijaModel} from './interfaces/ILekcijaModel';
+import {IFakultetModel} from './interfaces/IFakultetModel';
 
 const TABLE_NAME = 'leka';
-const LekcijaSchema : Schema = new Schema({
+const FakultetSchema : Schema = new Schema({
     nazivPredmeta: {
         type: String,
         required: true
@@ -24,4 +24,4 @@ const LekcijaSchema : Schema = new Schema({
     sala: String,
     napomene: String
 })
-export const LekcijaModel= model<ILekcijaModel>(TABLE_NAME,LekcijaSchema);
+export const FakultetModel= model<IFakultetModel>(TABLE_NAME,FakultetSchema);

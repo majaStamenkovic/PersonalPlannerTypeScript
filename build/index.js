@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const LekcijaRouter_1 = require("./routes/LekcijaRouter");
+const FakultetRouter_1 = require("./routes/FakultetRouter");
+const SportRouter_1 = require("./routes/SportRouter");
 mongoose_1.default.connect("mongodb://maja:majadb1@ds123852.mlab.com:23852/fonapp", { useNewUrlParser: true }).
     then(() => console.log('Connected to mongodb'));
 const app = express_1.default();
@@ -15,6 +16,7 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({
     extended: false
 }));
-const router = new LekcijaRouter_1.LekcijaRouter();
-app.use(router.routes);
+const router = new FakultetRouter_1.FakultetRouter();
+app.use('/fakultet', new FakultetRouter_1.FakultetRouter().routes);
+app.use('/sport', new SportRouter_1.SportRouter().routes);
 app.listen(3000, 'localhost', () => { console.log('Listening...'); });

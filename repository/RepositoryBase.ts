@@ -70,7 +70,8 @@ export class RepositoryBase<T extends Document>{
         let promise = new Promise<T>(async (resolve, reject) => {
             try{
                 let object = await this._model.findOneAndRemove({_id:objectID}).exec();
-                console.log('Uspesno obrisan');
+                if(object) console.log('Uspesno obrisan');
+                else console.log('Nije pronadjen')
                 resolve(object);
             }
             catch(e) {

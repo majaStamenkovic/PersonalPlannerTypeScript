@@ -71,7 +71,10 @@ class RepositoryBase {
         let promise = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let object = yield this._model.findOneAndRemove({ _id: objectID }).exec();
-                console.log('Uspesno obrisan');
+                if (object)
+                    console.log('Uspesno obrisan');
+                else
+                    console.log('Nije pronadjen');
                 resolve(object);
             }
             catch (e) {
