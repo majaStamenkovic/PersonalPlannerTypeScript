@@ -7,13 +7,21 @@ const LekcijaSchema : Schema = new Schema({
         type: String,
         required: true
     },
-    tipLekcije: {
+    nazivAktivnosti: {
         type: String,
         required: true
     },
-    brojLekcije: {
-        type: Number,
+    
+    datumIVreme:{
+        type:Date,
         required: true
-    }
+    },
+    trajanje: {
+        type:Number,
+        default:105
+    },
+    brojLekcije: Number,
+    sala: String,
+    napomene: String
 })
 export const LekcijaModel= model<ILekcijaModel>(TABLE_NAME,LekcijaSchema);

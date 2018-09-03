@@ -3,7 +3,7 @@ import { ILekcijaModel } from "./ILekcijaModel"
 import {LekcijaRepository} from './LekcijaRepository'
 import mongoose from "mongoose";
 import { ObjectID } from "bson";
-
+/*
 mongoose.connect("mongodb://maja:majadb1@ds123852.mlab.com:23852/fonapp", { useNewUrlParser: true }).
 then(()=>console.log('Connected to mongodb'));
 //var db = mongoose.connection;
@@ -15,6 +15,7 @@ let lekcija = new Lekcija(<ILekcijaModel>{
 });
 
 let repo = new LekcijaRepository();
+*/
 /*
 repo.ubaci(<ILekcijaModel>{
     nazivPredmeta:"Programski jezici",
@@ -22,6 +23,7 @@ repo.ubaci(<ILekcijaModel>{
     tipLekcije:"predavanje"
 }).then(()=>{repo.vratiSve();}).then((data)=>console.log(data));
 */
+/*
 async function ubaciIIspisi(){
     let ubaci = await repo.ubaci(<ILekcijaModel>{
         nazivPredmeta:"RMT",
@@ -33,9 +35,12 @@ async function ubaciIIspisi(){
     console.log('----------------------------------------------');
     repo.vratiSve().then((data)=>console.log(data));
 }
+
 ubaciIIspisi();
+*/
 //repo.obrisi(ObjectID.createFromHexString('5b8b9d5032e64219b880a98c')).then((data)=>console.log(data)).catch();
 //repo.vratiSve().then((data)=>console.log(data));
+/*
 async function izmeniIIspisi(){
     let ubaci = await repo.izmeniLekciju(ObjectID.createFromHexString('5b8b9d5032e64219b880a98c'),<ILekcijaModel>{
         nazivPredmeta:"RMT",
@@ -47,6 +52,7 @@ async function izmeniIIspisi(){
     console.log('----------------------------------------------');
     repo.vratiSve().then((data)=>console.log(data));
 }
+*/
 //izmeniIIspisi();
 
 //repo.vratiSve().then((data)=>console.log(data));

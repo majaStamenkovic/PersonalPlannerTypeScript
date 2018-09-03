@@ -12,7 +12,7 @@ export class Lekcija{
     }
 
     get tipLekcije():string{
-        return this._lekcijaModel.tipLekcije;
+        return this._lekcijaModel.nazivAktivnosti;
     }
 
     get brojLekcije():number{
@@ -23,8 +23,8 @@ export class Lekcija{
         this._lekcijaModel.nazivPredmeta = nazivPredmeta;
     }
 
-    set tipLekcije(tipLekcije:string){
-        this._lekcijaModel.tipLekcije = tipLekcije;
+    set nazivAktivnosti(tipLekcije:string){
+        this._lekcijaModel.nazivAktivnosti = tipLekcije;
     }
 
     set brojLekcije(brojLekcije:number){
@@ -33,11 +33,14 @@ export class Lekcija{
     get lekcija():ILekcijaModel{
         return this._lekcijaModel;
     }
-    public static createLekcija(nazivPredmeta:string,tipLekcije:string,brojLekcije:number):ILekcijaModel{
+    public static createLekcija(nazivPredmeta:string,nazivAktivnosti:string,datumIVreme:string,brojLekcije?:number,sala?:string,napomene?:string):ILekcijaModel{
         return <ILekcijaModel>{
             nazivPredmeta: nazivPredmeta,
-            tipLekcije: tipLekcije,
-            brojLekcije: brojLekcije
+            nazivAktivnosti: nazivAktivnosti,
+            brojLekcije: brojLekcije,
+            datumIVreme:new Date(datumIVreme),
+            napomene:napomene,
+            sala:sala
         }
     }
 }

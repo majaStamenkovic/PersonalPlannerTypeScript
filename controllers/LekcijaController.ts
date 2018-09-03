@@ -8,14 +8,12 @@ export class LekcijaController{
 
     public kreirajLekciju(req:Request, res:Response){
         const repo = new LekcijaRepository();
-        let lekcija = new Lekcija(<ILekcijaModel>req.body);
-        console.log(req.body);
-        //let lekcija = <ILekcijaModel>req.body;
-        console.log(lekcija);
+        //let lekcija = Lekcija.createLekcija(req.body.nazivPredmeta,req.body.tipLekcije,req.body.brojLekcije,req.body.datumOdrzavanja);
         try{
+            let lekcija = new Lekcija(<ILekcijaModel>req.body);
             repo.ubaci(lekcija.lekcija)
             .then((data)=>res.send(data))
-            .catch((err)=>res.send({"error":"greska1"}))
+            .catch((error)=>res.send({"error":error.message}))
             
         } catch(e) {
             console.log(e);
@@ -42,7 +40,10 @@ export class LekcijaController{
         const lekcijaID = req.params.oid;
         try{
             repo.vratiJednu(ObjectID.createFromHexString(lekcijaID))
-            .then((data)=>res.send(data))
+            .then((data)=>{res.send(data); 
+                let datum=data.datumIVreme;
+                datum.setMinutes(data.datumIVreme.getMinutes()+<number>data.trajanje);
+                console.log('Zavrsetak: ',datum.toLocaleTimeString())})
             .catch((err)=>res.send({"error":"doslo je do greske"}))
             
         } catch(e) {
@@ -55,7 +56,7 @@ export class LekcijaController{
         const repo = new LekcijaRepository();
         let lekcijaID = ObjectID.createFromHexString(req.params.oid);
         let lekcija = <ILekcijaModel>req.body;
-        console.log(lekcija);
+        //console.log(lekcija);
         try{
             repo.izmeniLekciju(lekcijaID,lekcija)
             .then((data)=>res.send(data))

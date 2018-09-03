@@ -11,6 +11,7 @@ mongoose.connect("mongodb://maja:majadb1@ds123852.mlab.com:23852/fonapp", { useN
 then(()=>console.log('Connected to mongodb'));
 
 const app = express();
+
 // Podesavanje bodyParser OBAVEZNO PRE RUTA!!!!!!!
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -18,6 +19,5 @@ app.use(bodyParser.urlencoded({
 }));
 const router = new LekcijaRouter();
 app.use(router.routes);
-
 
 app.listen(3000,'localhost',()=>{console.log('Listening...')});

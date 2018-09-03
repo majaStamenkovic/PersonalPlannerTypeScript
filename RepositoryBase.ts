@@ -36,7 +36,7 @@ export class RepositoryBase<T extends Document>{
     }
 
 
-    protected insert(objectToInsert: T) {
+    protected insert2(objectToInsert: T) {
         let promise = new Promise<T>(async (resolve, reject) => {
             let object = await this._model.create(objectToInsert);
             if(object){
@@ -46,6 +46,21 @@ export class RepositoryBase<T extends Document>{
             else {
                 console.log('Doslo je do greske prilikom ubacivanja objekta');
                 reject();
+            }
+        });
+        return promise;
+    }
+
+    protected insert(objectToInsert: T) {
+        let promise = new Promise<T>(async (resolve, reject) => {
+            try{
+                let object = await this._model.create(objectToInsert);
+                console.log('Uspesno dodat');
+                resolve(object);
+            }
+            catch(e) {
+                console.log('Doslo je do greske prilikom ubacivanja objekta');
+                reject(e);
             }
         });
         return promise;
@@ -66,7 +81,7 @@ export class RepositoryBase<T extends Document>{
         return promise;
     }
 
-    protected async update(objectID:ObjectID,novi:T):Promise<T>{
+    protected update(objectID:ObjectID,novi:T):Promise<T>{
         let promise = new Promise<T>(async (resolve, reject) => {
             let object = await this._model.findOneAndUpdate({_id:objectID},novi).exec();
             if(object){
