@@ -39,6 +39,19 @@ class RepositoryBase {
         });
         return promise;
     }
+    findByCriteria(criteria) {
+        let promise = new Promise((resolve, reject) => {
+            this._model.findOne(criteria, ((error, data) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(data);
+                }
+            }));
+        });
+        return promise;
+    }
     insert2(objectToInsert) {
         let promise = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             let object = yield this._model.create(objectToInsert);

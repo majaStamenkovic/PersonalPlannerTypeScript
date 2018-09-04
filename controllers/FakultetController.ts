@@ -1,9 +1,8 @@
-import {Request,Response,json} from 'express';
+import { Request, Response } from 'express';
 import { FakultetRepository } from '../repository/FakultetRepository';
 import { IFakultetModel } from '../models/interfaces/IFakultetModel';
-import {ObjectID} from 'bson'
+import { ObjectID } from 'bson'
 import { Fakultet } from '../business/Fakultet';
-import {zavrsetak} from '../helpers/DateUtil';
 
 export class FakultetController{
 

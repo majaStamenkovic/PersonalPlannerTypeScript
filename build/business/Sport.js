@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Sport {
-    constructor(lekcijaModel) {
-        this._sportModel = lekcijaModel;
+    constructor(sportModel) {
+        this._sportModel = sportModel;
     }
     get lokacija() {
         return this._sportModel.lokacija;
@@ -19,8 +19,8 @@ class Sport {
     set lokacija(lokacija) {
         this._sportModel.lokacija = lokacija;
     }
-    set nazivAktivnosti(tipLekcije) {
-        this._sportModel.nazivAktivnosti = tipLekcije;
+    set nazivAktivnosti(nazivAktivnosti) {
+        this._sportModel.nazivAktivnosti = nazivAktivnosti;
     }
     set trajanje(trajanje) {
         this._sportModel.trajanje = trajanje;

@@ -3,8 +3,8 @@ import {ISportModel} from '../models/interfaces/ISportModel'
 export class Sport{
     private _sportModel : ISportModel;
 
-    constructor(lekcijaModel: ISportModel){
-        this._sportModel=lekcijaModel;
+    constructor(sportModel: ISportModel){
+        this._sportModel=sportModel;
     }
 
     get lokacija():string{
@@ -27,8 +27,8 @@ export class Sport{
         this._sportModel.lokacija = lokacija;
     }
 
-    set nazivAktivnosti(tipLekcije:string){
-        this._sportModel.nazivAktivnosti = tipLekcije;
+    set nazivAktivnosti(nazivAktivnosti:string){
+        this._sportModel.nazivAktivnosti = nazivAktivnosti;
     }
 
     set trajanje(trajanje:number){

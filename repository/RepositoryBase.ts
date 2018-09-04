@@ -22,7 +22,20 @@ export class RepositoryBase<T extends Document>{
     }
 
     protected findOne(objectID:ObjectID): Promise<T> {
-        let criteria ={_id: objectID};
+        let criteria ={_id:objectID};
+        let promise = new Promise<T>((resolve, reject) => {
+            this._model.findOne(criteria, ((error, data) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
+            }));
+        });
+        return promise;
+    }
+
+    protected findByCriteria(criteria:object): Promise<T> {
         let promise = new Promise<T>((resolve, reject) => {
             this._model.findOne(criteria, ((error, data) => {
                 if (error) {
@@ -97,78 +110,5 @@ export class RepositoryBase<T extends Document>{
         });
         return promise;
     }
-
-/*
-//Bez vracanja promise
-protected async update2(objectID:ObjectID,novi:T){
-        let object = await this._model.findOne({_id:objectID}).exec();
-        if(object){
-            await this._model.updateOne({_id:objectID},novi);
-            console.log('Uspesna izmena');
-        }
-        else {
-            console.log('Objekat ne postoji');
-        }
-    }
-
-    protected delete(objectID:ObjectID){
-        this._model.findOneAndRemove({_id : objectID},(err) => {
-            if (err) {
-                console.log('Greska prilikom izbacivanja iz baze objekta _id:', objectID);
-            } else console.log('Uspesno izbacivanje');
-        });
-    }
-
-    protected insert(objectToInsert: T) {
-        this._model.create(objectToInsert, (err) => {
-            if (err) {
-                console.log('Greska prilikom ubacivanja u bazu ', objectToInsert);
-            } else console.log('Uspesno ubacivanje');
-        });
-    }
-*/
-    /*
-        
-    protected find2<T extends Document>(databaseModel: Model<T>,criteria: Object ={}):Promise<T[]>{
-        let dbModel =  databaseModel;
-        let promise = new Promise<T[]>((resolve,reject)=>{
-            dbModel.find(criteria,(error,data)=>{
-                if(error){
-                    reject(error);
-                } else {
-                    resolve(data);
-                }
-            })
-        });
-        return promise;
-    }
-
-        protected findOne2<T extends Document>(databaseModel: Model<T>, criteria: Object = {}): Promise<T> {
-
-        let dbModel =  <Model<T>> databaseModel;
-
-        let promise = new Promise<T>(((resolve, reject) => {
-            
-            dbModel.findOne(criteria, (error, responses) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(responses);
-                }
-                
-            });
-        }));
-        return promise;
-    }
-    protected insert2<T extends Document>(databaseModel:Model<T>,objectToInsert: T) {
-    let dbModel =  <Model<T>> databaseModel;
-    dbModel.create(objectToInsert,(err) => {
-        if (err) {
-            console.log('Greska prilikom ubacivanja u bazu ', objectToInsert);
-        } else console.log('Uspesno ubacivanje');
-    });
-
-}
-    */
 
 }

@@ -53,7 +53,6 @@ class CalendarController {
                     const drustvo = yield drustvoRepo.vratiSve();
                     const sport = yield sportRepo.vratiSve();
                     const fakultet = yield fakultetRepo.vratiSve();
-                    console.log(drustvo);
                     let datum = new Date(req.params.datum);
                     console.log(datum);
                     //console.log(req.query.datumIVreme);
