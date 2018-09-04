@@ -11,8 +11,8 @@ export class SportRepository extends RepositoryBase<ISportModel>{
     }
    
 
-    async vratiSve():Promise<ISportModel[]>{
-        let treninzi = await this.find();
+    async vratiSve(uslov:object ={}):Promise<ISportModel[]>{
+        let treninzi = await this.find(uslov);
         return <ISportModel[]> treninzi;
     }
 

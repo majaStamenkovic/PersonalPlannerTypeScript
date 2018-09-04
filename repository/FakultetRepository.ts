@@ -11,8 +11,8 @@ export class FakultetRepository extends RepositoryBase<IFakultetModel>{
     }
    
 
-    async vratiSve():Promise<IFakultetModel[]>{
-        let obaveze = await this.find();
+    async vratiSve(uslov:object ={}):Promise<IFakultetModel[]>{
+        let obaveze = await this.find(uslov);
         return <IFakultetModel[]> obaveze;
     }
 

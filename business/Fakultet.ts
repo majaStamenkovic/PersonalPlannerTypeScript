@@ -10,6 +10,9 @@ export class Fakultet{
     get nazivPredmeta():string{
         return this._fakultetModel.nazivPredmeta;
     }
+    get datumIVreme():Date{
+        return this._fakultetModel.datumIVreme;
+    }
 
     get nazivAktivnosti():string{
         return this._fakultetModel.nazivAktivnosti;

@@ -14,9 +14,9 @@ class FakultetRepository extends RepositoryBase_1.RepositoryBase {
     constructor() {
         super(FakultetModel_1.FakultetModel);
     }
-    vratiSve() {
+    vratiSve(uslov = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            let obaveze = yield this.find();
+            let obaveze = yield this.find(uslov);
             return obaveze;
         });
     }

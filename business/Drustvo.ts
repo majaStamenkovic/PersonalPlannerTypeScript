@@ -18,6 +18,9 @@ export class Drustvo{
     get trajanje():number{
         return this._drustvoModel.trajanje;
     }
+    get datumIVreme():Date{
+        return this._drustvoModel.datumIVreme;
+    }
 
     set lokacija(lokacija:string){
         this._drustvoModel.lokacija = lokacija;

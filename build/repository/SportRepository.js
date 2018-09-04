@@ -14,9 +14,9 @@ class SportRepository extends RepositoryBase_1.RepositoryBase {
     constructor() {
         super(SportModel_1.SportModel);
     }
-    vratiSve() {
+    vratiSve(uslov = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            let treninzi = yield this.find();
+            let treninzi = yield this.find(uslov);
             return treninzi;
         });
     }

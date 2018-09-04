@@ -11,6 +11,10 @@ export class Sport{
         return this._sportModel.lokacija;
     }
 
+    get datumIVreme():Date{
+        return this._sportModel.datumIVreme;
+    }
+
     get nazivAktivnosti():string{
         return this._sportModel.nazivAktivnosti;
     }

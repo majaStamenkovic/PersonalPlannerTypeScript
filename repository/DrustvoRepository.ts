@@ -10,8 +10,8 @@ export class DrustvoRepository extends RepositoryBase<IDrustvoModel>{
         super(DrustvoModel);
     }
 
-    async vratiSve():Promise<IDrustvoModel[]>{
-        let obaveze = await this.find();
+    async vratiSve(uslov:object ={}):Promise<IDrustvoModel[]>{
+        let obaveze = await this.find(uslov);
         return <IDrustvoModel[]> obaveze;
     }
 

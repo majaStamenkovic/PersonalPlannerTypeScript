@@ -13,6 +13,9 @@ class Drustvo {
     get trajanje() {
         return this._drustvoModel.trajanje;
     }
+    get datumIVreme() {
+        return this._drustvoModel.datumIVreme;
+    }
     set lokacija(lokacija) {
         this._drustvoModel.lokacija = lokacija;
     }

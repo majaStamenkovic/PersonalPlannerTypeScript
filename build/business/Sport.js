@@ -7,6 +7,9 @@ class Sport {
     get lokacija() {
         return this._sportModel.lokacija;
     }
+    get datumIVreme() {
+        return this._sportModel.datumIVreme;
+    }
     get nazivAktivnosti() {
         return this._sportModel.nazivAktivnosti;
     }

@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import { FakultetRouter } from "./routes/FakultetRouter";
 import {SportRouter} from './routes/SportRouter'
 import { DrustvoRouter } from "./routes/DrustvoRouter";
+import { CalendarRouter } from "./routes/CalendarRouter";
 
 mongoose.connect("mongodb://maja:majadb1@ds123852.mlab.com:23852/fonapp", { useNewUrlParser: true }).
 then(()=>console.log('Connected to mongodb'));
@@ -20,5 +21,6 @@ const router = new FakultetRouter();
 app.use('/fakultet',new FakultetRouter().routes);
 app.use('/sport',new SportRouter().routes);
 app.use('/drustvo',new DrustvoRouter().routes);
+app.use('/calendar',new CalendarRouter().routes);
 
 app.listen(3000,'localhost',()=>{console.log('Listening...')});

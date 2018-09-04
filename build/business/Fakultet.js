@@ -7,6 +7,9 @@ class Fakultet {
     get nazivPredmeta() {
         return this._fakultetModel.nazivPredmeta;
     }
+    get datumIVreme() {
+        return this._fakultetModel.datumIVreme;
+    }
     get nazivAktivnosti() {
         return this._fakultetModel.nazivAktivnosti;
     }
