@@ -40,23 +40,21 @@ class UserController {
         }
     }
     kreiranjeKorisnika(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const repo = new UserRepository_1.UserRepository();
-            try {
-                let user = new User_1.User(req.body);
-                let newPassword = yield bcrypt_1.default.hash(req.body.password, 10);
-                user.password = newPassword;
-                //console.log(user.password);
-                repo.ubaci(user.informacijeOKorisniku)
-                    .then((data) => res.status(201).send(data))
-                    //Uhvati dupli mejl
-                    .catch((err) => res.status(400).send({ "error": err.message, "dupli": "dupli" }));
-            }
-            catch (error) {
-                console.log(error);
-                res.status(500).send({ "error": error.message });
-            }
-        });
+        const repo = new UserRepository_1.UserRepository();
+        try {
+            let user = new User_1.User(req.body);
+            let newPassword = bcrypt_1.default.hashSync(req.body.password, 10);
+            user.password = newPassword;
+            //console.log(user.password);
+            repo.ubaci(user.informacijeOKorisniku)
+                .then((data) => res.status(201).send(data))
+                //Uhvati dupli mejl
+                .catch((err) => res.status(400).send({ "error": err.message, "dupli": "dupli" }));
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).send({ "error": error.message });
+        }
     }
     logovanjeKorisnika(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

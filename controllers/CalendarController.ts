@@ -5,6 +5,9 @@ import { FakultetRepository } from "../repository/FakultetRepository";
 import { Drustvo } from "../business/Drustvo";
 import { Sport } from "../business/Sport";
 import { Fakultet } from "../business/Fakultet";
+import { DrustvoController } from "./DrustvoController";
+import { SportController } from "./SportController";
+import { FakultetController } from "./FakultetController";
 
 
 export class CalendarController{
@@ -32,6 +35,39 @@ export class CalendarController{
             res.status(400).send({"error": e.message})
         }
     }
+
+        public async vratiSveObaveze2(req:Request, res:Response){
+            const drustvoRepo = new DrustvoRepository();
+            const sportRepo = new SportRepository();
+            const fakultetRepo = new FakultetRepository();
+    
+            try{
+                console.log(req.query);
+                
+                const drustvo = await drustvoRepo.vratiSve(req.query);
+                const sport = await sportRepo.vratiSve(req.query);
+                const fakultet = await fakultetRepo.vratiSve(req.query);
+                
+                let rezultat ={};
+                let prikazDrustvo = drustvo.filter((aktivnost)=>aktivnost.username==req.body.username);
+                if(prikazDrustvo.length>0){
+                    rezultat["drustvene obaveze"]=prikazDrustvo;
+                }  
+                let prikazFakultet = fakultet.filter((aktivnost)=>aktivnost.username==req.body.username);
+                if(prikazFakultet.length>0){
+                    rezultat["fakultetske obaveze"]=prikazFakultet;
+                }
+                let prikazSport = sport.filter((aktivnost)=>aktivnost.username==req.body.username);
+                if(prikazSport.length>0){
+                    rezultat["sportske aktivnosti"]=prikazSport;
+                }                
+                res.status(200).send(rezultat);
+                
+            } catch(e) {
+                console.log(e);
+                res.status(400).send({"error": e.message})
+            }
+        }
 
     public async vratiPoDatumu(req:Request, res:Response){
         const drustvoRepo = new DrustvoRepository();

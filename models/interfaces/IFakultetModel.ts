@@ -8,4 +8,5 @@ export interface IFakultetModel extends Document{
     trajanje:number;
     sala: string;
     napomene: string;
+    username: string;
 }

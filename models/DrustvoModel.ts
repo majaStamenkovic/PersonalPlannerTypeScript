@@ -16,6 +16,10 @@ const DrustvoSchema : Schema = new Schema({
         type:Number,
         default:120
     },
+    username: {
+        type: String,
+        //required: true
+    },
     lokacija: String,
     drustvo: [String]
 })

@@ -6,4 +6,5 @@ export interface IDrustvoModel extends Document{
     trajanje:number;
     lokacija: string;
     drustvo: string;
+    username:string;
 }

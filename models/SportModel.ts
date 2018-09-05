@@ -16,6 +16,10 @@ const SportSchema : Schema = new Schema({
         type:Number,
         default:105
     },
+    username: {
+        type: String,
+        //required: true
+    },
     lokacija: String,
     napomene: String
 })

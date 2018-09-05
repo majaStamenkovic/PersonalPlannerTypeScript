@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import { DrustvoController } from '../controllers/DrustvoController';
+import { verifikacija } from '../helpers/auth';
 
 const router = Router();
 export class DrustvoRouter{
@@ -11,12 +12,12 @@ export class DrustvoRouter{
 
     get routes(){
         let controller = this._drustvoController;
-        router.get('/',controller.vratiSveObaveze);
-        router.post('/',controller.kreirajObavezu);
-        router.get('/:oid',controller.vratiObavezu);
-        router.put('/:oid',controller.izmeniObavezu);
-        router.delete('/:oid',controller.obrisiObavezu);
-        router.patch('/:oid',controller.dopuniObavezu);
+        router.get('/',verifikacija,controller.vratiSveObaveze);
+        router.post('/',verifikacija,controller.kreirajObavezu);
+        router.get('/:oid',verifikacija,controller.vratiObavezu);
+        router.put('/:oid',verifikacija,controller.izmeniObavezu);
+        router.delete('/:oid',verifikacija,controller.obrisiObavezu);
+        router.patch('/:oid',verifikacija,controller.dopuniObavezu);
 
         return router;
     }

@@ -40,6 +40,41 @@ class CalendarController {
             }
         });
     }
+    vratiSveObaveze2(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const drustvoRepo = new DrustvoRepository_1.DrustvoRepository();
+            const sportRepo = new SportRepository_1.SportRepository();
+            const fakultetRepo = new FakultetRepository_1.FakultetRepository();
+            try {
+                console.log(req.query);
+                const drustvo = yield drustvoRepo.vratiSve(req.query);
+                const sport = yield sportRepo.vratiSve(req.query);
+                const fakultet = yield fakultetRepo.vratiSve(req.query);
+                let rezultat = {};
+                let prikazDrustvo = drustvo.filter((aktivnost) => aktivnost.username == req.body.username);
+                if (prikazDrustvo.length > 0) {
+                    rezultat["drustvene obaveze"] = prikazDrustvo;
+                }
+                if (drustvo.length > 0)
+                    rezultat["sve drustvene aktivnosti"] = drustvo;
+                let prikazFakultet = fakultet.filter((aktivnost) => aktivnost.username == req.body.username);
+                if (prikazFakultet.length > 0) {
+                    rezultat["fakultetske obaveze"] = prikazFakultet;
+                }
+                let prikazSport = sport.filter((aktivnost) => aktivnost.username == req.body.username);
+                if (prikazSport.length > 0) {
+                    rezultat["sportske aktivnosti"] = prikazSport;
+                }
+                if (sport.length > 0)
+                    rezultat["sve sportske aktivnosti"] = sport;
+                res.status(200).send(rezultat);
+            }
+            catch (e) {
+                console.log(e);
+                res.status(400).send({ "error": e.message });
+            }
+        });
+    }
     vratiPoDatumu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const drustvoRepo = new DrustvoRepository_1.DrustvoRepository();

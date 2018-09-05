@@ -6,4 +6,5 @@ export interface ISportModel extends Document{
     trajanje:number;
     lokacija: string;
     napomene: string;
+    username: string;
 }

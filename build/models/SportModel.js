@@ -15,6 +15,9 @@ const SportSchema = new mongoose_1.Schema({
         type: Number,
         default: 105
     },
+    username: {
+        type: String,
+    },
     lokacija: String,
     napomene: String
 });

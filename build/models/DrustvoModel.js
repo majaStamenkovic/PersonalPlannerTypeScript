@@ -15,6 +15,9 @@ const DrustvoSchema = new mongoose_1.Schema({
         type: Number,
         default: 120
     },
+    username: {
+        type: String,
+    },
     lokacija: String,
     drustvo: [String]
 });

@@ -28,11 +28,11 @@ export class UserController {
 
     }
 
-    public async kreiranjeKorisnika(req: Request, res: Response) {
+    public kreiranjeKorisnika(req: Request, res: Response) {
         const repo = new UserRepository();
         try {
             let user = new User(<IUserModel>req.body);
-            let newPassword = await bcrypt.hash(req.body.password, 10);
+            let newPassword = bcrypt.hashSync(req.body.password, 10);
             user.password = newPassword;
             //console.log(user.password);
             repo.ubaci(user.informacijeOKorisniku)

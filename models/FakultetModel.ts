@@ -20,6 +20,10 @@ const FakultetSchema : Schema = new Schema({
         type:Number,
         default:105
     },
+    username: {
+        type: String,
+        //required: true
+    },
     brojLekcije: Number,
     sala: String,
     napomene: String
