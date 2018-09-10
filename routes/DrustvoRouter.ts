@@ -1,7 +1,6 @@
 import {Router} from 'express';
-import { DrustvoController } from '../controllers/DrustvoController';
+import { DrustvoController } from '../controllers/aktivnosti/DrustvoController';
 
-const router = Router();
 export class DrustvoRouter{
     private _drustvoController: DrustvoController;
 
@@ -10,6 +9,7 @@ export class DrustvoRouter{
     }
 
     get routes(){
+        const router = Router();
         let controller = this._drustvoController;
         router.get('/',controller.vratiSveObaveze);
         router.post('/',controller.kreirajObavezu);

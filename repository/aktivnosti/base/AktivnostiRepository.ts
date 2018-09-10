@@ -1,18 +1,18 @@
 import {Document} from 'mongoose';
 import { ObjectID } from 'bson';
-import { RepositoryBase } from "./RepositoryBase";
+import { RepositoryBase } from "../../base/RepositoryBase";
 
 
 export class AktivnostiRepository<T extends Document> extends RepositoryBase<T>{
 
     async vratiSve(uslov:object ={}):Promise<T[]>{
-        let obaveze = await this.find(uslov);
-        return <T[]> obaveze;
+        let aktivnosti = await this.find(uslov);
+        return <T[]> aktivnosti;
     }
 
     async vratiJednu(objectID:ObjectID):Promise<T>{
-        let obaveza = await this.findOne(objectID);
-        return <T> obaveza;
+        let aktivnost = await this.findOne(objectID);
+        return <T> aktivnost;
     }
 
     async ubaci(novi: T):Promise<T>{

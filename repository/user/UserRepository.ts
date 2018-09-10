@@ -1,8 +1,8 @@
-import { RepositoryBase } from './RepositoryBase';
+import { RepositoryBase } from '../base/RepositoryBase';
 import { Document, Model } from 'mongoose';
 import { ObjectID } from 'bson';
-import { IUserModel } from '../models/interfaces/user/IUserModel';
-import { UserModel } from '../models/UserModel';
+import { IUserModel } from '../../models/interfaces/user/IUserModel';
+import { UserModel } from '../../models/UserModel';
 
 export class UserRepository extends RepositoryBase<IUserModel>{
     

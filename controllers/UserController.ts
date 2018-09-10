@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { IUserModel } from '../models/interfaces/user/IUserModel';
 import bcrypt from 'bcrypt';
 import { User } from '../business/User';
-import { UserRepository } from '../repository/UserRepository';
+import { UserRepository } from '../repository/user/UserRepository';
 import { isNullOrUndefined } from 'util';
 import * as jwt from 'jsonwebtoken';
 import { REGEX_MAIL, SECRET_KEY } from '../helpers/constants';

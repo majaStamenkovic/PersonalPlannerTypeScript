@@ -20,7 +20,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const User_1 = require("../business/User");
-const UserRepository_1 = require("../repository/UserRepository");
+const UserRepository_1 = require("../repository/user/UserRepository");
 const jwt = __importStar(require("jsonwebtoken"));
 const constants_1 = require("../helpers/constants");
 class UserController {

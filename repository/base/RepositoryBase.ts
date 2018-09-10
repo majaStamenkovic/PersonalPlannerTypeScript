@@ -1,6 +1,5 @@
-import { Document, Model } from 'mongoose'
-import { ObjectID } from 'bson'
-import { IRead } from './interfaces/IRead';
+import { Document, Model } from 'mongoose';
+import { ObjectID } from 'bson';
 
 export class RepositoryBase<T extends Document>{
     private _model: Model<T>;

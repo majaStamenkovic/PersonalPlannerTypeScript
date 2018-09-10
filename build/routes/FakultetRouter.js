@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const FakultetController_1 = require("../controllers/FakultetController");
+const FakultetController_1 = require("../controllers/aktivnosti/FakultetController");
 class FakultetRouter {
     constructor() {
         this._fakultetController = new FakultetController_1.FakultetController();

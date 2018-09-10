@@ -1,8 +1,8 @@
 import {Router} from 'express';
-import { SportController } from '../controllers/SportController';
+import { SportController } from '../controllers/aktivnosti/SportController';
+import { AktivnostiRouter } from './aktivnosti/base/AktivnostiRouter';
 
-const router = Router();
-export class SportRouter{
+export class SportRouter {
     private _sportController: SportController;
 
     constructor(){
@@ -10,6 +10,7 @@ export class SportRouter{
     }
 
     get routes(){
+        const router = Router();
         let controller = this._sportController;
         router.get('/',controller.vratiSveObaveze);
         router.post('/',controller.kreirajObavezu);

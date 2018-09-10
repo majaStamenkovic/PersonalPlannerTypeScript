@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const DrustvoRepository_1 = require("../repository/DrustvoRepository");
-const SportRepository_1 = require("../repository/SportRepository");
-const FakultetRepository_1 = require("../repository/FakultetRepository");
+const DrustvoRepository_1 = require("../repository/aktivnosti/DrustvoRepository");
+const SportRepository_1 = require("../repository/aktivnosti/SportRepository");
+const FakultetRepository_1 = require("../repository/aktivnosti/FakultetRepository");
 const Drustvo_1 = require("../business/Drustvo");
 const Sport_1 = require("../business/Sport");
 const Fakultet_1 = require("../business/Fakultet");
@@ -21,16 +21,17 @@ class CalendarController {
             const sportRepo = new SportRepository_1.SportRepository();
             const fakultetRepo = new FakultetRepository_1.FakultetRepository();
             try {
-                console.log(req.query);
+                // Dodaje se zahtev da su samo korisnikove aktivnosti
+                req.query.username = req.body.username;
                 const drustvo = yield drustvoRepo.vratiSve(req.query);
                 const sport = yield sportRepo.vratiSve(req.query);
                 const fakultet = yield fakultetRepo.vratiSve(req.query);
                 let rezultat = {};
-                if (drustvo.length > 0)
+                if (drustvo != undefined && drustvo.length > 0)
                     rezultat["drustvene aktivnosti"] = drustvo;
-                if (sport.length > 0)
+                if (sport != undefined && sport.length > 0)
                     rezultat["sportske aktivnosti"] = sport;
-                if (fakultet.length > 0)
+                if (fakultet != undefined && fakultet.length > 0)
                     rezultat["fakultetske obaveze"] = fakultet;
                 res.status(200).send(rezultat);
             }
@@ -40,29 +41,33 @@ class CalendarController {
             }
         });
     }
-    vratiSveObaveze2(req, res) {
+    vratiSveObaveze3(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const drustvoRepo = new DrustvoRepository_1.DrustvoRepository();
-            const sportRepo = new SportRepository_1.SportRepository();
-            const fakultetRepo = new FakultetRepository_1.FakultetRepository();
             try {
-                console.log(req.query);
-                const drustvo = yield drustvoRepo.vratiSve(req.query);
-                const sport = yield sportRepo.vratiSve(req.query);
-                const fakultet = yield fakultetRepo.vratiSve(req.query);
-                let rezultat = {};
-                let prikazDrustvo = drustvo.filter((aktivnost) => aktivnost.username == req.body.username);
-                if (prikazDrustvo.length > 0) {
-                    rezultat["drustvene obaveze"] = prikazDrustvo;
+                req.query.username = req.body.username;
+                const criteria = CalendarController.kriterijumPretrage(req.query);
+                /*
+                let criteria = req.query;
+                // Dodaje se zahtev da su samo aktivnosti ulogovanog korisnika
+                criteria.username= req.body.username;
+                if(criteria.datumIVreme!=undefined){
+                    criteria.datumIVreme = new Date(req.query.datumIVreme);
+                    if(req.query.lte) {
+                        criteria.datumIVreme={$lte:criteria.datumIVreme};
+                        delete criteria.lte;
+                    }
+                    else criteria.datumIVreme={$gte:criteria.datumIVreme};
                 }
-                let prikazFakultet = fakultet.filter((aktivnost) => aktivnost.username == req.body.username);
-                if (prikazFakultet.length > 0) {
-                    rezultat["fakultetske obaveze"] = prikazFakultet;
+                if(criteria.datumIVremePosle!=undefined && criteria.datumIVremePre!=undefined){
+                    const datumIVremePosle = new Date(req.query.datumIVremePosle);
+                    const datumIVremePre = new Date(req.query.datumIVremePre);
+                    criteria.datumIVreme={$gte:datumIVremePosle,$lte:datumIVremePre} ;
+                    delete criteria.datumIVremePosle;
+                    delete criteria.datumIVremePre;
                 }
-                let prikazSport = sport.filter((aktivnost) => aktivnost.username == req.body.username);
-                if (prikazSport.length > 0) {
-                    rezultat["sportske aktivnosti"] = prikazSport;
-                }
+                console.log(criteria);
+                */
+                const rezultat = yield CalendarController.vratiSveAkt(criteria);
                 res.status(200).send(rezultat);
             }
             catch (e) {
@@ -70,6 +75,46 @@ class CalendarController {
                 res.status(400).send({ "error": e.message });
             }
         });
+    }
+    static vratiSveAkt(criteria) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const drustvoRepo = new DrustvoRepository_1.DrustvoRepository();
+            const sportRepo = new SportRepository_1.SportRepository();
+            const fakultetRepo = new FakultetRepository_1.FakultetRepository();
+            const drustvo = yield drustvoRepo.vratiSve(criteria);
+            const sport = yield sportRepo.vratiSve(criteria);
+            const fakultet = yield fakultetRepo.vratiSve(criteria);
+            let rezultat = {};
+            if (drustvo != undefined && drustvo.length > 0)
+                rezultat["drustvene aktivnosti"] = drustvo;
+            if (sport != undefined && sport.length > 0)
+                rezultat["sportske aktivnosti"] = sport;
+            if (fakultet != undefined && fakultet.length > 0)
+                rezultat["fakultetske obaveze"] = fakultet;
+            return rezultat;
+        });
+    }
+    static kriterijumPretrage(zahtev) {
+        let criteria = zahtev;
+        criteria.username = zahtev.username;
+        if (criteria.datumIVreme != undefined) {
+            criteria.datumIVreme = new Date(zahtev.datumIVreme);
+            if (zahtev.lte) {
+                criteria.datumIVreme = { $lte: criteria.datumIVreme };
+                delete criteria.lte;
+            }
+            else
+                criteria.datumIVreme = { $gte: criteria.datumIVreme };
+        }
+        if (criteria.datumIVremePosle != undefined && criteria.datumIVremePre != undefined) {
+            const datumIVremePosle = new Date(zahtev.datumIVremePosle);
+            const datumIVremePre = new Date(zahtev.datumIVremePre);
+            criteria.datumIVreme = { $gte: datumIVremePosle, $lte: datumIVremePre };
+            delete criteria.datumIVremePosle;
+            delete criteria.datumIVremePre;
+        }
+        console.log(criteria);
+        return criteria;
     }
     vratiPoDatumu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

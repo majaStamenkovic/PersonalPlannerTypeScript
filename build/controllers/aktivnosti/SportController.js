@@ -8,52 +8,49 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const SportRepository_1 = require("../../repository/aktivnosti/SportRepository");
 const bson_1 = require("bson");
-const DrustvoRepository_1 = require("../repository/aktivnosti/DrustvoRepository");
-const Drustvo_1 = require("../business/Drustvo");
-class DrustvoController {
+const Sport_1 = require("../../business/Sport");
+class SportController {
     kreirajObavezu(req, res) {
-        const repo = new DrustvoRepository_1.DrustvoRepository();
+        const repo = new SportRepository_1.SportRepository();
         try {
-            let druzenje = new Drustvo_1.Drustvo(req.body);
-            repo.ubaci(druzenje.plan)
+            let trening = new Sport_1.Sport(req.body);
+            repo.ubaci(trening.obaveza)
                 .then((data) => res.status(201).send(data))
-                .catch((error) => res.status(500).send({ "error": error.message }));
+                .catch((error) => res.status(400).send({ "error": error.message }));
         }
         catch (e) {
             console.log(e);
-            res.status(400).send({ "error": e.message });
+            res.status(500).send({ "error": e.message });
         }
     }
     vratiSveObaveze(req, res) {
-        const repo = new DrustvoRepository_1.DrustvoRepository();
+        const repo = new SportRepository_1.SportRepository();
         try {
             repo.vratiSve({ "username": req.body.username })
-                .then((data) => { res.status(200).send(data); })
-                .catch((err) => res.status(500).send({ "error": err.message }));
+                .then((data) => res.status(200).send(data))
+                .catch((err) => res.status(400).send({ "error": err.message }));
         }
         catch (e) {
             console.log(e);
-            res.status(400).send({ "error": e.message });
+            res.status(500).send({ "error": e.message });
         }
     }
     vratiObavezu(req, res) {
-        const repo = new DrustvoRepository_1.DrustvoRepository();
-        const obavezaID = req.params.oid;
+        const repo = new SportRepository_1.SportRepository();
         try {
-            repo.vratiJednu(bson_1.ObjectID.createFromHexString(obavezaID))
+            repo.vratiJednu(bson_1.ObjectID.createFromHexString(req.params.oid))
                 .then((data) => {
-                //console.log(data);
-                if (data === null)
+                if (data == null)
                     res.status(404).send({ "error": "Nije pronadjeno" });
                 else if (data.username != req.body.username)
                     res.status(401).send({ "error": "Neautorizovan pristup" });
                 else {
                     res.status(200).send(data);
-                    //console.log(zavrsetak(data.datumIVreme,<number>data.trajanje));
                 }
             })
-                .catch((err) => res.status(400).send({ "error": err.message }));
+                .catch((err) => res.status(500).send({ "error": err.message }));
         }
         catch (e) {
             console.log(e);
@@ -62,19 +59,19 @@ class DrustvoController {
     }
     izmeniObavezu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const repo = new DrustvoRepository_1.DrustvoRepository();
+            const repo = new SportRepository_1.SportRepository();
             let obavezaID = bson_1.ObjectID.createFromHexString(req.params.oid);
             try {
-                let mozeDaMenja = yield repo.vratiJednu(obavezaID);
+                const obavezaID = bson_1.ObjectID.createFromHexString(req.params.oid);
+                const mozeDaMenja = yield repo.vratiJednu(obavezaID);
                 if (mozeDaMenja === null || mozeDaMenja.username != req.body.username) {
                     res.status(401).send({ "error": "Neautorizovan pristup" });
+                    return;
                 }
-                else {
-                    let obaveza = req.body;
-                    repo.izmeniObavezu(obavezaID, obaveza)
-                        .then((data) => res.status(200).send(data))
-                        .catch((err) => res.status(500).send({ "error": err.message }));
-                }
+                let obaveza = req.body;
+                repo.izmeniObavezu(obavezaID, obaveza)
+                    .then((data) => res.status(200).send(data))
+                    .catch((err) => res.status(500).send({ "error": err.message }));
             }
             catch (e) {
                 console.log(e);
@@ -84,24 +81,22 @@ class DrustvoController {
     }
     dopuniObavezu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const repo = new DrustvoRepository_1.DrustvoRepository();
-            let obavezaID = bson_1.ObjectID.createFromHexString(req.params.oid);
-            //console.log(zaIzmenu);
+            const repo = new SportRepository_1.SportRepository();
             try {
+                let obavezaID = bson_1.ObjectID.createFromHexString(req.params.oid);
                 let mozeDaMenja = yield repo.vratiJednu(obavezaID);
                 if (mozeDaMenja === null || mozeDaMenja.username != req.body.username) {
                     res.status(401).send({ "error": "Neautorizovan pristup" });
+                    return;
                 }
-                else {
-                    const izmene = req.body;
-                    const zaIzmenu = {};
-                    for (const izmena of izmene) {
-                        zaIzmenu[izmena.nazivPolja] = izmena.novaVrednost;
-                    }
-                    repo.dopuniObavezu(obavezaID, zaIzmenu)
-                        .then((data) => res.status(200).send(data))
-                        .catch((err) => res.status(500).send({ "error": err.message }));
+                const izmene = req.body;
+                const zaIzmenu = {};
+                for (const izmena of izmene) {
+                    zaIzmenu[izmena.nazivPolja] = izmena.novaVrednost;
                 }
+                repo.dopuniObavezu(obavezaID, zaIzmenu)
+                    .then((data) => res.status(200).send(data))
+                    .catch((err) => res.status(500).send({ "error": err.message }));
             }
             catch (e) {
                 console.log(e);
@@ -111,30 +106,24 @@ class DrustvoController {
     }
     obrisiObavezu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const repo = new DrustvoRepository_1.DrustvoRepository();
-            const obavezaID = req.params.oid;
+            const repo = new SportRepository_1.SportRepository();
             try {
+                const obavezaID = bson_1.ObjectID.createFromHexString(req.params.oid);
                 let mozeDaBrise = yield repo.vratiJednu(obavezaID);
                 if (mozeDaBrise === null || mozeDaBrise.username != req.body.username) {
                     res.status(401).send({ "error": "Neautorizovan pristup" });
+                    return;
                 }
-                else {
-                    repo.obrisi(bson_1.ObjectID.createFromHexString(obavezaID))
-                        .then((data) => {
-                        if (data === null)
-                            res.status(404).send({ "error": "Nije pronadjeno" });
-                        else
-                            res.status(200).send(data);
-                    })
-                        .catch((err) => res.status(500).send({ "error": err.message }));
-                }
+                repo.obrisi(obavezaID)
+                    .then((data) => { res.status(200).send(data); })
+                    .catch((err) => res.status(500).send({ "error": err.message }));
             }
             catch (e) {
-                //console.log(e);
+                console.log(e);
                 //Uhvatice npr ako nije prosledjen format koji odgovara ObjectID
                 res.status(400).send({ "error": e.message });
             }
         });
     }
 }
-exports.DrustvoController = DrustvoController;
+exports.SportController = SportController;

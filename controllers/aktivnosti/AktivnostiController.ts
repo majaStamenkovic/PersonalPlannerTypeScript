@@ -1,32 +1,28 @@
-import { Request, Response } from 'express';
-import { ObjectID } from 'bson'
-import { DrustvoRepository } from '../repository/DrustvoRepository';
-import { Drustvo } from '../business/Drustvo';
-import { IDrustvoModel } from '../models/interfaces/aktivnosti/IDrustvoModel';
+import {Request,Response} from 'express';
+import { Document } from 'mongoose';
+import {ObjectID} from 'bson';
+import { IAktivnostiController } from "./interfaces/IAktivnostiController";
+import { AktivnostiRepository } from '../../repository/aktivnosti/base/AktivnostiRepository';
+import { IAktivnostiModel } from '../../models/interfaces/aktivnosti/base/IAktivnostiModel';
 
-export class DrustvoController {
+export abstract class AktivnostiController<T extends IAktivnostiModel> { //implements IAktivnostiController {
+    
+    //protected repo: AktivnostiRepository<T>;
 
-    public kreirajObavezu(req: Request, res: Response) {
-        const repo = new DrustvoRepository();
+    abstract kreirajObavezu(req: Request, res: Response): void;
 
+    vratiObavezu1(req: Request, res: Response,repo:AktivnostiRepository<T>): void {
         try {
-            let druzenje = new Drustvo(<IDrustvoModel>req.body);
-            repo.ubaci(druzenje.plan)
-                .then((data) => res.status(201).send(data))
-                .catch((error) => res.status(500).send({ "error": error.message }))
-
-        } catch (e) {
-            console.log(e);
-            res.status(400).send({ "error": e.message })
-        }
-
-    }
-
-    public vratiSveObaveze(req: Request, res: Response) {
-        const repo = new DrustvoRepository();
-        try {
-            repo.vratiSve({ "username": req.body.username })
-                .then((data) => { res.status(200).send(data) })
+            repo.vratiJednu(ObjectID.createFromHexString(req.params.oid))
+                .then((data) => {
+                    if (data == null)
+                        res.status(404).send({ "error": "Nije pronadjeno" });
+                    else if (data.username != req.body.username)
+                        res.status(401).send({ "error": "Neautorizovan pristup" });
+                    else {
+                        res.status(200).send(data);
+                    }
+                })
                 .catch((err) => res.status(500).send({ "error": err.message }))
 
         } catch (e) {
@@ -34,57 +30,40 @@ export class DrustvoController {
             res.status(400).send({ "error": e.message })
         }
     }
-
-    public vratiObavezu(req: Request, res: Response) {
-        const repo = new DrustvoRepository();
-        const obavezaID = req.params.oid;
+    
+    vratiSveObaveze1(req: Request, res: Response,repo:AktivnostiRepository<T>): void {
         try {
-            repo.vratiJednu(ObjectID.createFromHexString(obavezaID))
-                .then((data) => {
-                    //console.log(data);
-
-                    if (data === null)
-                        res.status(404).send({ "error": "Nije pronadjeno" });
-                    else if (data.username != req.body.username)
-                        res.status(401).send({ "error": "Neautorizovan pristup" });
-                    else {
-                        res.status(200).send(data);
-                        //console.log(zavrsetak(data.datumIVreme,<number>data.trajanje));
-                    }
-                })
+            repo.vratiSve({ "username": req.body.username })
+                .then((data) => res.status(200).send(data))
                 .catch((err) => res.status(400).send({ "error": err.message }))
 
         } catch (e) {
             console.log(e);
-            res.status(400).send({ "error": e.message })
+            res.status(500).send({ "error": e.message })
         }
     }
-
-    public async izmeniObavezu(req: Request, res: Response) {
-        const repo = new DrustvoRepository();
+    async izmeniObavezu1(req: Request, res: Response,repo:AktivnostiRepository<T>): Promise<void> {
         let obavezaID = ObjectID.createFromHexString(req.params.oid);
-
         try {
             let mozeDaMenja = await repo.vratiJednu(obavezaID);
             if (mozeDaMenja === null || mozeDaMenja.username != req.body.username) {
                 res.status(401).send({ "error": "Neautorizovan pristup" });
             } else {
-                let obaveza = <IDrustvoModel>req.body;
+                let obaveza = <T>req.body;
                 repo.izmeniObavezu(obavezaID, obaveza)
                     .then((data) => res.status(200).send(data))
                     .catch((err) => res.status(500).send({ "error": err.message }))
             }
+
+
         } catch (e) {
             console.log(e);
             res.status(400).send({ "error": e.message })
         }
     }
-
-    public async dopuniObavezu(req: Request, res: Response) {
-        const repo = new DrustvoRepository();
-        let obavezaID = ObjectID.createFromHexString(req.params.oid);
-        //console.log(zaIzmenu);
+    async dopuniObavezu1(req: Request, res: Response,repo:AktivnostiRepository<T>): Promise<void>{
         try {
+            let obavezaID = ObjectID.createFromHexString(req.params.oid);
             let mozeDaMenja = await repo.vratiJednu(obavezaID);
             if (mozeDaMenja === null || mozeDaMenja.username != req.body.username) {
                 res.status(401).send({ "error": "Neautorizovan pristup" });
@@ -103,23 +82,18 @@ export class DrustvoController {
             res.status(400).send({ "error": e.message })
         }
     }
-
-    public async obrisiObavezu(req: Request, res: Response) {
-        const repo = new DrustvoRepository();
-        const obavezaID = req.params.oid;
+    async obrisiObavezu1(req: Request, res: Response,repo:AktivnostiRepository<T>): Promise<void> {
         try {
+            const obavezaID = ObjectID.createFromHexString(req.params.oid);
             let mozeDaBrise = await repo.vratiJednu(obavezaID);
             if (mozeDaBrise === null || mozeDaBrise.username != req.body.username) {
                 res.status(401).send({ "error": "Neautorizovan pristup" });
             } else {
-                repo.obrisi(ObjectID.createFromHexString(obavezaID))
-                    .then((data) => {
-                        if (data === null)
-                            res.status(404).send({ "error": "Nije pronadjeno" });
-                        else res.status(200).send(data);
-                    })
+                repo.obrisi(obavezaID)
+                    .then((data) => { res.status(200).send(data); })
                     .catch((err) => res.status(500).send({ "error": err.message }))
             }
+
         } catch (e) {
             //console.log(e);
             //Uhvatice npr ako nije prosledjen format koji odgovara ObjectID

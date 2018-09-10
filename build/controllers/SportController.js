@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const SportRepository_1 = require("../repository/SportRepository");
+const SportRepository_1 = require("../repository/aktivnosti/SportRepository");
 const bson_1 = require("bson");
 const Sport_1 = require("../business/Sport");
 class SportController {

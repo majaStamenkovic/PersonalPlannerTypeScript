@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const FakultetRepository_1 = require("../repository/FakultetRepository");
+const FakultetRepository_1 = require("../repository/aktivnosti/FakultetRepository");
 const bson_1 = require("bson");
 const Fakultet_1 = require("../business/Fakultet");
 class FakultetController {
