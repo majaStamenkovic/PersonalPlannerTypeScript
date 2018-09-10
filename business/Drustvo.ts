@@ -1,4 +1,4 @@
-import { IDrustvoModel } from '../models/interfaces/IDrustvoModel';
+import { IDrustvoModel } from '../models/interfaces/aktivnosti/IDrustvoModel';
 
 export class Drustvo{
     private _drustvoModel : IDrustvoModel;

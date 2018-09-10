@@ -1,7 +1,7 @@
-import {Schema, Document, model } from 'mongoose';
-import {IFakultetModel} from './interfaces/IFakultetModel';
+import { Schema, model } from 'mongoose';
+import { IFakultetModel } from './interfaces/aktivnosti/IFakultetModel';
+import { TABLE_NAME_FAKULTET } from '../helpers/constants';
 
-const TABLE_NAME = 'leka';
 const FakultetSchema : Schema = new Schema({
     nazivPredmeta: {
         type: String,
@@ -22,10 +22,10 @@ const FakultetSchema : Schema = new Schema({
     },
     username: {
         type: String,
-        //required: true
+        required: true
     },
     brojLekcije: Number,
     sala: String,
     napomene: String
 })
-export const FakultetModel= model<IFakultetModel>(TABLE_NAME,FakultetSchema);
+export const FakultetModel= model<IFakultetModel>(TABLE_NAME_FAKULTET,FakultetSchema);

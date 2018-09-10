@@ -1,5 +1,5 @@
 {
-  "name": "pj",
+  "name": "personalplannerapi",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,6 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "start":"nodemon --exec --./index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

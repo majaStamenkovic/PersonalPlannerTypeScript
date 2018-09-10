@@ -1,6 +1,6 @@
 import { Request, Response, json } from 'express';
 import { SportRepository } from '../repository/SportRepository';
-import { ISportModel } from '../models/interfaces/ISportModel';
+import { ISportModel } from '../models/interfaces/aktivnosti/ISportModel';
 import { ObjectID } from 'bson'
 import { Sport } from '../business/Sport';
 import { zavrsetak } from '../helpers/DateUtil';

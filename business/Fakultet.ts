@@ -1,4 +1,4 @@
-import {IFakultetModel} from '../models/interfaces/IFakultetModel'
+import {IFakultetModel} from '../models/interfaces/aktivnosti/IFakultetModel'
 
 export class Fakultet{
     private _fakultetModel : IFakultetModel;

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ObjectID } from 'bson'
 import { DrustvoRepository } from '../repository/DrustvoRepository';
 import { Drustvo } from '../business/Drustvo';
-import { IDrustvoModel } from '../models/interfaces/IDrustvoModel';
+import { IDrustvoModel } from '../models/interfaces/aktivnosti/IDrustvoModel';
 
 export class DrustvoController {
 

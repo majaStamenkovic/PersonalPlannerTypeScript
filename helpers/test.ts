@@ -1,3 +1,11 @@
+if(null==undefined)console.log('Jednaki'); //true
+else console.log('Nisu jednaki');
+
+if(null===undefined)console.log('Jednaki'); //false
+else console.log('Nisu jednaki');
+
+//true
+//false
 //import { Lekcija } from "./Lekcija";
 //import { ILekcijaModel } from "./ILekcijaModel"
 //import {LekcijaRepository} from './LekcijaRepository'

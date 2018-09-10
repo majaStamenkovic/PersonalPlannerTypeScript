@@ -1,5 +1,5 @@
-import {Schema, Document, model } from 'mongoose';
-import { IDrustvoModel } from './interfaces/IDrustvoModel';
+import { Schema, model } from 'mongoose';
+import { IDrustvoModel } from './interfaces/aktivnosti/IDrustvoModel';
 
 const TABLE_NAME = 'drustvo';
 const DrustvoSchema : Schema = new Schema({

@@ -1,16 +1,16 @@
-import {RepositoryBase} from './RepositoryBase';
-import {Document, Model} from 'mongoose';
-import { ISportModel } from '../models/interfaces/ISportModel';
+import { Document, Model } from 'mongoose';
+import { ISportModel } from '../models/interfaces/aktivnosti/ISportModel';
 import { SportModel } from '../models/SportModel';
 import { ObjectID } from 'bson';
+import { AktivnostiRepository } from './AktivnostiRepository';
 
-export class SportRepository extends RepositoryBase<ISportModel>{
+export class SportRepository extends AktivnostiRepository<ISportModel>{
     
     constructor(){
         super(SportModel);
     }
    
-
+    /*
     async vratiSve(uslov:object ={}):Promise<ISportModel[]>{
         let treninzi = await this.find(uslov);
         return <ISportModel[]> treninzi;
@@ -40,6 +40,6 @@ export class SportRepository extends RepositoryBase<ISportModel>{
         let izmenjenObjekat= this.update(objectID,{$set:izmena});
         return izmenjenObjekat;
     }
-
+    */
      
 }

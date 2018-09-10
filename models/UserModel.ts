@@ -1,7 +1,7 @@
 import { Schema, Document, model } from 'mongoose';
-import { IUserModel } from './interfaces/IUserModel';
+import { IUserModel } from './interfaces/user/IUserModel';
+import { TABLE_NAME_USER } from '../helpers/constants';
 
-const TABLE_NAME = 'user';
 const UserSchema : Schema = new Schema({
     username: {
         type: String,
@@ -19,4 +19,4 @@ const UserSchema : Schema = new Schema({
         required: true
     }
 })
-export const UserModel= model<IUserModel>(TABLE_NAME,UserSchema);
+export const UserModel= model<IUserModel>(TABLE_NAME_USER,UserSchema);

@@ -1,15 +1,15 @@
-import {RepositoryBase} from './RepositoryBase';
 import {Document, Model} from 'mongoose';
 import { ObjectID } from 'bson';
-import { IDrustvoModel } from '../models/interfaces/IDrustvoModel';
+import { IDrustvoModel } from '../models/interfaces/aktivnosti/IDrustvoModel';
 import { DrustvoModel } from '../models/DrustvoModel';
+import { AktivnostiRepository } from './AktivnostiRepository';
 
-export class DrustvoRepository extends RepositoryBase<IDrustvoModel>{
+export class DrustvoRepository extends AktivnostiRepository<IDrustvoModel>{
     
     constructor(){
         super(DrustvoModel);
     }
-
+    /*
     async vratiSve(uslov:object ={}):Promise<IDrustvoModel[]>{
         let obaveze = await this.find(uslov);
         return <IDrustvoModel[]> obaveze;
@@ -39,6 +39,6 @@ export class DrustvoRepository extends RepositoryBase<IDrustvoModel>{
         let izmenjenObjekat= this.update(objectID,{$set:izmena});
         return izmenjenObjekat;
     }
-
+    */
      
 }

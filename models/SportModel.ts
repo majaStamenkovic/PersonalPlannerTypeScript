@@ -1,5 +1,5 @@
-import {Schema, Document, model } from 'mongoose';
-import {ISportModel} from './interfaces/ISportModel';
+import { Schema, model } from 'mongoose';
+import { ISportModel } from './interfaces/aktivnosti/ISportModel';
 
 const TABLE_NAME = 'sport';
 const SportSchema : Schema = new Schema({

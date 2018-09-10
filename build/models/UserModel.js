@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const TABLE_NAME = 'user';
+const constants_1 = require("../helpers/constants");
 const UserSchema = new mongoose_1.Schema({
     username: {
         type: String,
@@ -18,4 +18,4 @@ const UserSchema = new mongoose_1.Schema({
         required: true
     }
 });
-exports.UserModel = mongoose_1.model(TABLE_NAME, UserSchema);
+exports.UserModel = mongoose_1.model(constants_1.TABLE_NAME_USER, UserSchema);

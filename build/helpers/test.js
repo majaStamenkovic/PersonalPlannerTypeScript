@@ -1,5 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+if (null == undefined)
+    console.log('Jednaki'); //true
+else
+    console.log('Nisu jednaki');
+if (null === undefined)
+    console.log('Jednaki'); //false
+else
+    console.log('Nisu jednaki');
 /*
 mongoose.connect("mongodb://maja:majadb1@ds123852.mlab.com:23852/fonapp", { useNewUrlParser: true }).
 then(()=>console.log('Connected to mongodb'));

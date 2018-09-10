@@ -8,10 +8,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = __importStar(require("jsonwebtoken"));
+const constants_1 = require("./constants");
 function verifikacija(req, res, next) {
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, 'secret');
+        const decoded = jwt.verify(token, constants_1.SECRET_KEY);
         //Uspesna autentikacija
         //Mozes da dodas novo polje u req
         //console.log(decoded);

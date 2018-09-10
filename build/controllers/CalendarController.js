@@ -55,8 +55,6 @@ class CalendarController {
                 if (prikazDrustvo.length > 0) {
                     rezultat["drustvene obaveze"] = prikazDrustvo;
                 }
-                if (drustvo.length > 0)
-                    rezultat["sve drustvene aktivnosti"] = drustvo;
                 let prikazFakultet = fakultet.filter((aktivnost) => aktivnost.username == req.body.username);
                 if (prikazFakultet.length > 0) {
                     rezultat["fakultetske obaveze"] = prikazFakultet;
@@ -65,8 +63,6 @@ class CalendarController {
                 if (prikazSport.length > 0) {
                     rezultat["sportske aktivnosti"] = prikazSport;
                 }
-                if (sport.length > 0)
-                    rezultat["sve sportske aktivnosti"] = sport;
                 res.status(200).send(rezultat);
             }
             catch (e) {

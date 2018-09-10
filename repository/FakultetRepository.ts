@@ -1,15 +1,16 @@
-import {RepositoryBase} from './RepositoryBase';
-import {Document, Model} from 'mongoose';
-import { IFakultetModel } from '../models/interfaces/IFakultetModel';
+import { Document, Model } from 'mongoose';
+import { IFakultetModel } from '../models/interfaces/aktivnosti/IFakultetModel';
 import { FakultetModel } from '../models/FakultetModel';
 import { ObjectID } from 'bson';
+import { AktivnostiRepository } from './AktivnostiRepository';
 
-export class FakultetRepository extends RepositoryBase<IFakultetModel>{
+export class FakultetRepository extends AktivnostiRepository<IFakultetModel>{
     
     constructor(){
         super(FakultetModel);
     }
    
+    /*
 
     async vratiSve(uslov:object ={}):Promise<IFakultetModel[]>{
         let obaveze = await this.find(uslov);
@@ -40,6 +41,6 @@ export class FakultetRepository extends RepositoryBase<IFakultetModel>{
         let izmenjenObjekat= this.update(objectID,{$set:izmena});
         return izmenjenObjekat;
     }
-
+    */
      
 }

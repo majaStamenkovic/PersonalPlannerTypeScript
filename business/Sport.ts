@@ -1,4 +1,4 @@
-import {ISportModel} from '../models/interfaces/ISportModel'
+import {ISportModel} from '../models/interfaces/aktivnosti/ISportModel'
 
 export class Sport{
     private _sportModel : ISportModel;

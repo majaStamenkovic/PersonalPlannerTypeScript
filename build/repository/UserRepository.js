@@ -14,26 +14,20 @@ class UserRepository extends RepositoryBase_1.RepositoryBase {
     constructor() {
         super(UserModel_1.UserModel);
     }
-    vratiJednu(userID) {
+    vratiKorisnika(criteria) {
         return __awaiter(this, void 0, void 0, function* () {
-            let user = yield this.findOne(userID);
+            let user = yield this.findOneByCriteria(criteria);
             return user;
         });
     }
-    nadjiPoUsername(username) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let user = yield this.findByCriteria({ "username": username });
-            return user;
-        });
-    }
-    ubaci(novi) {
+    ubaciKorisnika(novi) {
         return __awaiter(this, void 0, void 0, function* () {
             let noviUser = yield this.insert(novi);
             ;
             return noviUser;
         });
     }
-    obrisi(objectID) {
+    obrisiKorisnika(objectID) {
         return __awaiter(this, void 0, void 0, function* () {
             let obrisanUser = yield this.delete(objectID);
             return obrisanUser;

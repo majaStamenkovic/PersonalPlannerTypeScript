@@ -1,77 +1,95 @@
 import { Request, Response } from 'express';
-import { IUserModel } from '../models/interfaces/IUserModel';
+import { IUserModel } from '../models/interfaces/user/IUserModel';
 import bcrypt from 'bcrypt';
 import { User } from '../business/User';
 import { UserRepository } from '../repository/UserRepository';
 import { isNullOrUndefined } from 'util';
 import * as jwt from 'jsonwebtoken';
-
+import { REGEX_MAIL, SECRET_KEY } from '../helpers/constants';
 
 export class UserController {
 
-    public kreiranjeKorisnika2(req: Request, res: Response) {
+    public async kreiranjeKorisnika(req: Request, res: Response) {
         const repo = new UserRepository();
         try {
-            let user = new User(<IUserModel>req.body);
-            bcrypt.hash(req.body.password, 10, (err, data) => {
-                user.password = data;
-                console.log(user.password);
-                repo.ubaci(user.informacijeOKorisniku)
-                    .then((data) => res.status(201).send(data))
-            });
 
-        } catch (error) {
-            console.log(error);
-            res.status(500).send({ "error": error.message });
-        }
+            // Provera da li su sva polja uneta
+            if (req.body.username == undefined || req.body.email == undefined || req.body.password == undefined) {
+                res.status(400).send({ "Greska": "Polja username, password i email su obavezna" });
+                return;
+            }
+            // Proverava da li je email adresa validna
+            const regexp = new RegExp(REGEX_MAIL);
+            if (!regexp.test(req.body.email)) {
+                res.status(400).send({ "Greska": "Email nije validan" });
+                return;
+            }
+            // Proverava da li postoji korisnik sa istim imenom
+            const postojiUserSaIstimImenom = await repo.vratiKorisnika({ "username": req.body.username });
+            if (postojiUserSaIstimImenom) {
+                res.status(400).send({ "Greska": "Vec postoji korisnik sa trazenim imenom" });
+                return;
+            }
 
+            // Proverava da li postoji korisnik sa istim mejlom
+            let postojiUserSaIstimMejlom = await repo.vratiKorisnika({ "email": req.body.email });
+            if (postojiUserSaIstimMejlom) {
+                res.status(400).send({ "Greska": "Vec postoji korisnik sa unetim mejlom" });
+                return;
+            }
 
-    }
-
-    public kreiranjeKorisnika(req: Request, res: Response) {
-        const repo = new UserRepository();
-        try {
-            let user = new User(<IUserModel>req.body);
-            let newPassword = bcrypt.hashSync(req.body.password, 10);
+            // Moze se uneti korisnik
+            const user = new User(<IUserModel>req.body);
+            const newPassword = bcrypt.hashSync(req.body.password, 10);
             user.password = newPassword;
-            //console.log(user.password);
-            repo.ubaci(user.informacijeOKorisniku)
-                .then((data) => res.status(201).send(data))
-                //Uhvati dupli mejl
-                .catch((err) => res.status(400).send({ "error": err.message, "dupli": "dupli" }))
+
+            repo.ubaciKorisnika(user.informacijeOKorisniku)
+                .then((data) => res.status(201).send(data));
 
         } catch (error) {
             console.log(error);
             res.status(500).send({ "error": error.message });
         }
     }
+
     public async logovanjeKorisnika(req: Request, res: Response) {
         const repo = new UserRepository();
         try {
-            if (typeof req.body.username == 'undefined' || typeof req.body.password == 'undefined') {
+            // Provera da li su sva polja uneta
+            if (req.body.username == undefined || req.body.password == undefined) {
                 res.status(400).send({ "poruka": "Morate uneti username i password" });
-            } else {
-                let postojiUser = await repo.nadjiPoUsername(req.body.username);
-                //console.log(postojiUser);
-                if (postojiUser) {
-                    //console.log(' IF');
-                    let passwordMatch = await bcrypt.compare(req.body.password, postojiUser.password);
-                    //console.log(passwordMatch);
-                    if (passwordMatch) {
-                        const token = jwt.sign({
-                            username:postojiUser.username,
-                            userId:postojiUser._id
-                        },'secret',{ expiresIn:"1h"});
-                        console.log(token);
-                        res.status(200).send({ "poruka": "Autentikacija uspesna", "token":token })
-                    } else {
-                        res.status(401).send({ "greska": "Pogresna sifra" })
-                    }
-                } else {
-                    res.status(401).send({ "greska": "Ne postoji korisnik sa datim username" });
-                }
+                return;
             }
+            // Provera da li postoji korisnik sa unetim username 
+            const postojiUser = await repo.vratiKorisnika({ "username": req.body.username });
+            if (!postojiUser) {
+                res.status(401).send({ "greska": "Ne postoji korisnik sa datim username" });
+                return;
+            }
+            // Provera sifre
+            const passwordMatch = await bcrypt.compare(req.body.password, postojiUser.password);
+            if (!passwordMatch) {
+                res.status(401).send({ "greska": "Pogresna sifra" });
+                return;
+            }
+            // Generisanje tokena
+            const token = jwt.sign({
+                username: postojiUser.username,
+                userId: postojiUser._id
+            }, SECRET_KEY, { expiresIn: "1h" });
+            res.status(200).send({ "poruka": "Autentikacija uspesna", "token": token });
 
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({ "error": error.message });
+        }
+    }
+
+    public async korisnickiNalog(req: Request, res: Response) {
+        const repo = new UserRepository();
+        try {
+            const postojiUser = await repo.vratiKorisnika({ "username": req.body.username });
+            res.status(200).send({"username":postojiUser.username, "email":postojiUser.email});
         } catch (error) {
             console.log(error);
             res.status(500).send({ "error": error.message });

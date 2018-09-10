@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { FakultetRepository } from '../repository/FakultetRepository';
-import { IFakultetModel } from '../models/interfaces/IFakultetModel';
+import { IFakultetModel } from '../models/interfaces/aktivnosti/IFakultetModel';
 import { ObjectID } from 'bson'
 import { Fakultet } from '../business/Fakultet';
 
@@ -8,16 +8,14 @@ export class FakultetController {
 
     public kreirajObavezu(req: Request, res: Response) {
         const repo = new FakultetRepository();
-
         try {
             let lekcija = new Fakultet(<IFakultetModel>req.body);
             repo.ubaci(lekcija.obaveza)
                 .then((data) => res.status(201).send(data))
-                .catch((error) => res.status(500).send({ "error": error.message }))
-
+                .catch((error)=>res.status(400).send({ "error": error.message }));
         } catch (e) {
             console.log(e);
-            res.status(400).send({ "error": e.message })
+            res.status(500).send({ "error": e.message })
         }
 
     }
@@ -26,35 +24,29 @@ export class FakultetController {
         const repo = new FakultetRepository();
         try {
             repo.vratiSve({ "username": req.body.username })
-                .then((data) => {
-                    // let korisnikoviPodaci = data.filter((lekcija)=>lekcija.username==req.body.username);
-                    res.status(200).send(data);
-                })
-                .catch((err) => res.status(500).send({ "error": err.message }))
+                .then((data) => res.status(200).send(data))
+                .catch((err) => res.status(400).send({ "error": err.message }))
 
         } catch (e) {
             console.log(e);
-            res.status(400).send({ "error": e.message })
+            res.status(500).send({ "error": e.message })
         }
     }
 
     public vratiObavezu(req: Request, res: Response) {
         const repo = new FakultetRepository();
-        const obavezaID = req.params.oid;
         try {
-            repo.vratiJednu(ObjectID.createFromHexString(obavezaID))
+            repo.vratiJednu(ObjectID.createFromHexString(req.params.oid))
                 .then((data) => {
-                    //console.log(data);
-                    if (data === null)
+                    if (data == null)
                         res.status(404).send({ "error": "Nije pronadjeno" });
                     else if (data.username != req.body.username)
                         res.status(401).send({ "error": "Neautorizovan pristup" });
                     else {
                         res.status(200).send(data);
-                        //console.log(zavrsetak(data.datumIVreme,data.trajanje));
                     }
                 })
-                .catch((err) => res.status(400).send({ "error": err.message }))
+                .catch((err) => res.status(500).send({ "error": err.message }))
 
         } catch (e) {
             console.log(e);
@@ -109,8 +101,8 @@ export class FakultetController {
 
     public async obrisiObavezu(req: Request, res: Response) {
         const repo = new FakultetRepository();
-        const obavezaID = ObjectID.createFromHexString(req.params.oid);
         try {
+            const obavezaID = ObjectID.createFromHexString(req.params.oid);
             let mozeDaBrise = await repo.vratiJednu(obavezaID);
             if (mozeDaBrise === null || mozeDaBrise.username != req.body.username) {
                 res.status(401).send({ "error": "Neautorizovan pristup" });

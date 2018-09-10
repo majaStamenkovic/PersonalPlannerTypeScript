@@ -39,7 +39,7 @@ class RepositoryBase {
         });
         return promise;
     }
-    findByCriteria(criteria) {
+    findOneByCriteria(criteria) {
         let promise = new Promise((resolve, reject) => {
             this._model.findOne(criteria, ((error, data) => {
                 if (error) {
@@ -52,29 +52,15 @@ class RepositoryBase {
         });
         return promise;
     }
-    insert2(objectToInsert) {
-        let promise = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            let object = yield this._model.create(objectToInsert);
-            if (object) {
-                console.log('Uspesno dodat');
-                resolve(object);
-            }
-            else {
-                console.log('Doslo je do greske prilikom ubacivanja objekta');
-                reject();
-            }
-        }));
-        return promise;
-    }
     insert(objectToInsert) {
         let promise = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let object = yield this._model.create(objectToInsert);
-                console.log('Uspesno dodat');
+                // Uspesno je kreirano
                 resolve(object);
             }
             catch (e) {
-                console.log('Doslo je do greske prilikom ubacivanja objekta');
+                // Doslo je do greske prilikom ubacivanja
                 reject(e);
             }
         }));
@@ -92,7 +78,7 @@ class RepositoryBase {
             }
             catch (e) {
                 console.log('Doslo je do greske prilikom brisanja objekta _id:', objectID);
-                reject();
+                reject(e);
             }
         }));
         return promise;

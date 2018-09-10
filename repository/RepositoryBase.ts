@@ -1,5 +1,6 @@
 import { Document, Model } from 'mongoose'
 import { ObjectID } from 'bson'
+import { IRead } from './interfaces/IRead';
 
 export class RepositoryBase<T extends Document>{
     private _model: Model<T>;
@@ -35,7 +36,7 @@ export class RepositoryBase<T extends Document>{
         return promise;
     }
 
-    protected findByCriteria(criteria:object): Promise<T> {
+    protected findOneByCriteria(criteria:object): Promise<T> {
         let promise = new Promise<T>((resolve, reject) => {
             this._model.findOne(criteria, ((error, data) => {
                 if (error) {
@@ -48,31 +49,15 @@ export class RepositoryBase<T extends Document>{
         return promise;
     }
 
-
-    protected insert2(objectToInsert: T) {
-        let promise = new Promise<T>(async (resolve, reject) => {
-            let object = await this._model.create(objectToInsert);
-            if(object){
-                console.log('Uspesno dodat');
-                resolve(object);
-            }
-            else {
-                console.log('Doslo je do greske prilikom ubacivanja objekta');
-                reject();
-            }
-        });
-        return promise;
-    }
-
     protected insert(objectToInsert: T) {
         let promise = new Promise<T>(async (resolve, reject) => {
             try{
                 let object = await this._model.create(objectToInsert);
-                console.log('Uspesno dodat');
+                // Uspesno je kreirano
                 resolve(object);
             }
             catch(e) {
-                console.log('Doslo je do greske prilikom ubacivanja objekta');
+                // Doslo je do greske prilikom ubacivanja
                 reject(e);
             }
         });
@@ -89,7 +74,7 @@ export class RepositoryBase<T extends Document>{
             }
             catch(e) {
                 console.log('Doslo je do greske prilikom brisanja objekta _id:',objectID);
-                reject();
+                reject(e);
             }
             
         });

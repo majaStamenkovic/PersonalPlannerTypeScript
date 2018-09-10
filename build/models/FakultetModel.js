@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const TABLE_NAME = 'leka';
+const constants_1 = require("../helpers/constants");
 const FakultetSchema = new mongoose_1.Schema({
     nazivPredmeta: {
         type: String,
@@ -21,9 +21,10 @@ const FakultetSchema = new mongoose_1.Schema({
     },
     username: {
         type: String,
+        required: true
     },
     brojLekcije: Number,
     sala: String,
     napomene: String
 });
-exports.FakultetModel = mongoose_1.model(TABLE_NAME, FakultetSchema);
+exports.FakultetModel = mongoose_1.model(constants_1.TABLE_NAME_FAKULTET, FakultetSchema);

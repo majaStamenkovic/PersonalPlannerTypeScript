@@ -1,18 +1,19 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
+import { verifikacija } from '../helpers/auth';
 
-const router = Router();
 export class UserRouter{
     private _userController: UserController;
-
     constructor(){
         this._userController=new UserController();
     }
 
     get routes(){
-        let controller = this._userController;
+        const controller = this._userController;
+        const router = Router();
         router.post('/login',controller.logovanjeKorisnika);
         router.post('/signup',controller.kreiranjeKorisnika);
+        router.get('/account',verifikacija,controller.korisnickiNalog);
 
         return router;
     }

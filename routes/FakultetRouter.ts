@@ -1,8 +1,6 @@
 import {Router} from 'express';
 import { FakultetController } from '../controllers/FakultetController';
-import { verifikacija } from '../helpers/auth';
 
-const router = Router();
 export class FakultetRouter{
     private _fakultetController: FakultetController;
 
@@ -12,12 +10,13 @@ export class FakultetRouter{
 
     get routes(){
         let controller = this._fakultetController;
-        router.get('/',verifikacija,controller.vratiSveObaveze);
-        router.post('/',verifikacija,controller.kreirajObavezu);
-        router.get('/:oid',verifikacija,controller.vratiObavezu);
-        router.put('/:oid',verifikacija,controller.izmeniObavezu);
-        router.delete('/:oid',verifikacija,controller.obrisiObavezu);
-        router.patch('/:oid',verifikacija,controller.dopuniObavezu);
+        const router = Router();
+        router.get('/',controller.vratiSveObaveze);
+        router.post('/',controller.kreirajObavezu);
+        router.get('/:oid',controller.vratiObavezu);
+        router.put('/:oid',controller.izmeniObavezu);
+        router.delete('/:oid',controller.obrisiObavezu);
+        router.patch('/:oid',controller.dopuniObavezu);
 
         return router;
     }
