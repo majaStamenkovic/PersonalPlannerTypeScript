@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { ISportModel } from './interfaces/aktivnosti/ISportModel';
+import { TABLE_NAME_SPORT } from '../helpers/constants';
 
-const TABLE_NAME = 'sport';
 const SportSchema : Schema = new Schema({
     nazivAktivnosti: {
         type: String,
@@ -18,9 +18,9 @@ const SportSchema : Schema = new Schema({
     },
     username: {
         type: String,
-        //required: true
+        required: true
     },
     lokacija: String,
     napomene: String
 })
-export const SportModel= model<ISportModel>(TABLE_NAME,SportSchema);
+export const SportModel= model<ISportModel>(TABLE_NAME_SPORT,SportSchema);

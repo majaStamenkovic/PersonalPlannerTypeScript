@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
-import { verifikacija } from '../helpers/auth';
+import { autorizacija } from '../helpers/auth';
 
 export class UserRouter{
     private _userController: UserController;
@@ -13,7 +13,7 @@ export class UserRouter{
         const router = Router();
         router.post('/login',controller.logovanjeKorisnika);
         router.post('/signup',controller.kreiranjeKorisnika);
-        router.get('/account',verifikacija,controller.korisnickiNalog);
+        router.get('/account',autorizacija,controller.korisnickiNalog);
 
         return router;
     }

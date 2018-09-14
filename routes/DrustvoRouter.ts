@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import { DrustvoController } from '../controllers/aktivnosti/DrustvoController';
 
 export class DrustvoRouter{

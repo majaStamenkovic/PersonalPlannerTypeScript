@@ -6,7 +6,7 @@ import { Fakultet } from '../../business/Fakultet';
 import { IAktivnostiController } from './interfaces/IAktivnostiController';
 import { AktivnostiController } from './AktivnostiController';
 
-export class FakultetController{
+export class FakultetController implements IAktivnostiController{
     
     public kreirajObavezu(req: Request, res: Response) {
         const repo = new FakultetRepository();
@@ -63,7 +63,7 @@ export class FakultetController{
         try {
             const obavezaID = ObjectID.createFromHexString(req.params.oid);
             const mozeDaMenja = await repo.vratiJednu(obavezaID);
-            if (mozeDaMenja === null || mozeDaMenja.username != req.body.username) {
+            if (mozeDaMenja == null || mozeDaMenja.username != req.body.username) {
                 res.status(401).send({ "error": "Neautorizovan pristup" });
                 return;
             }

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { IDrustvoModel } from './interfaces/aktivnosti/IDrustvoModel';
+import { TABLE_NAME_DRUSTVO } from '../helpers/constants';
 
-const TABLE_NAME = 'drustvo';
 const DrustvoSchema : Schema = new Schema({
     nazivAktivnosti: {
         type: String,
@@ -18,9 +18,9 @@ const DrustvoSchema : Schema = new Schema({
     },
     username: {
         type: String,
-        //required: true
+        required: true
     },
     lokacija: String,
     drustvo: [String]
 })
-export const DrustvoModel= model<IDrustvoModel>(TABLE_NAME,DrustvoSchema);
+export const DrustvoModel= model<IDrustvoModel>(TABLE_NAME_DRUSTVO,DrustvoSchema);

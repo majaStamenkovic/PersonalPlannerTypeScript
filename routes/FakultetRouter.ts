@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import { FakultetController } from '../controllers/aktivnosti/FakultetController';
 
 export class FakultetRouter{

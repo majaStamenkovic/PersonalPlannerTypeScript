@@ -12,7 +12,7 @@ class UserRouter {
         const router = express_1.Router();
         router.post('/login', controller.logovanjeKorisnika);
         router.post('/signup', controller.kreiranjeKorisnika);
-        router.get('/account', auth_1.verifikacija, controller.korisnickiNalog);
+        router.get('/account', auth_1.autorizacija, controller.korisnickiNalog);
         return router;
     }
 }

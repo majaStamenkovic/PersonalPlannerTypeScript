@@ -25,15 +25,5 @@ class Lekcija {
     get lekcija() {
         return this._lekcijaModel;
     }
-    static createLekcija(nazivPredmeta, nazivAktivnosti, datumIVreme, brojLekcije, sala, napomene) {
-        return {
-            nazivPredmeta: nazivPredmeta,
-            nazivAktivnosti: nazivAktivnosti,
-            brojLekcije: brojLekcije,
-            datumIVreme: new Date(datumIVreme),
-            napomene: napomene,
-            sala: sala
-        };
-    }
 }
 exports.Lekcija = Lekcija;

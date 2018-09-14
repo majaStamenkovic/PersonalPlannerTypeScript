@@ -5,6 +5,3 @@ function zavrsetak(datum, trajanje) {
     return datum.toLocaleTimeString();
 }
 exports.zavrsetak = zavrsetak;
-function daLiJeIstogDana(datum, aktivnost) {
-}
-exports.daLiJeIstogDana = daLiJeIstogDana;

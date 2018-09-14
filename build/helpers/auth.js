@@ -9,7 +9,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = __importStar(require("jsonwebtoken"));
 const constants_1 = require("./constants");
-function verifikacija(req, res, next) {
+function autorizacija(req, res, next) {
     try {
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token, constants_1.SECRET_KEY);
@@ -27,4 +27,4 @@ function verifikacija(req, res, next) {
         });
     }
 }
-exports.verifikacija = verifikacija;
+exports.autorizacija = autorizacija;

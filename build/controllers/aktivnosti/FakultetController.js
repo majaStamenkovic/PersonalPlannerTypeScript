@@ -63,7 +63,7 @@ class FakultetController {
             try {
                 const obavezaID = bson_1.ObjectID.createFromHexString(req.params.oid);
                 const mozeDaMenja = yield repo.vratiJednu(obavezaID);
-                if (mozeDaMenja === null || mozeDaMenja.username != req.body.username) {
+                if (mozeDaMenja == null || mozeDaMenja.username != req.body.username) {
                     res.status(401).send({ "error": "Neautorizovan pristup" });
                     return;
                 }

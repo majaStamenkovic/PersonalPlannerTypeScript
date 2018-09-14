@@ -89,7 +89,7 @@ class UserController {
                 const token = jwt.sign({
                     username: postojiUser.username,
                     userId: postojiUser._id
-                }, constants_1.SECRET_KEY, { expiresIn: "1h" });
+                }, constants_1.SECRET_KEY, { expiresIn: constants_1.TRAJANJE_TOKENA });
                 res.status(200).send({ "poruka": "Autentikacija uspesna", "token": token });
             }
             catch (error) {

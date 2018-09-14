@@ -22,9 +22,9 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({
     extended: false
 }));
-app.use('/fakultet', auth_1.verifikacija, new FakultetRouter_1.FakultetRouter().routes);
-app.use('/sport', auth_1.verifikacija, new SportRouter_1.SportRouter().routes);
-app.use('/drustvo', auth_1.verifikacija, new DrustvoRouter_1.DrustvoRouter().routes);
-app.use('/calendar', new CalendarRouter_1.CalendarRouter().routes);
+app.use('/fakultet', auth_1.autorizacija, new FakultetRouter_1.FakultetRouter().routes);
+app.use('/sport', auth_1.autorizacija, new SportRouter_1.SportRouter().routes);
+app.use('/drustvo', auth_1.autorizacija, new DrustvoRouter_1.DrustvoRouter().routes);
+app.use('/calendar', auth_1.autorizacija, new CalendarRouter_1.CalendarRouter().routes);
 app.use('/user', new UserRouter_1.UserRouter().routes);
 app.listen(3000, 'localhost', () => { console.log('Listening...'); });

@@ -2,7 +2,7 @@ import {Request, Response} from 'express'
 import * as jwt from 'jsonwebtoken';
 import { SECRET_KEY } from './constants';
 
-export function verifikacija(req:Request,res:Response,next:Function){
+export function autorizacija(req:Request,res:Response,next:Function){
     try {
         const token =req.headers.authorization.split(' ')[1];
         const decoded= jwt.verify(token,SECRET_KEY); 

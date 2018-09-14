@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import { CalendarController } from '../controllers/CalendarController';
-import {verifikacija} from '../helpers/auth'
+
 export class CalendarRouter{
     private _calendarController: CalendarController;
 
@@ -11,8 +11,7 @@ export class CalendarRouter{
     get routes(){
         const router = Router();
         let controller = this._calendarController;
-        router.get('/',verifikacija, controller.vratiSveObaveze3);
-        router.get('/:datum',verifikacija, controller.vratiPoDatumu);
+        router.get('/', controller.vratiSveObaveze);
 
         return router;
     }

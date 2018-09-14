@@ -28,15 +28,5 @@ class Fakultet {
     get obaveza() {
         return this._fakultetModel;
     }
-    static createLekcija(nazivPredmeta, nazivAktivnosti, datumIVreme, brojLekcije, sala, napomene) {
-        return {
-            nazivPredmeta: nazivPredmeta,
-            nazivAktivnosti: nazivAktivnosti,
-            brojLekcije: brojLekcije,
-            datumIVreme: new Date(datumIVreme),
-            napomene: napomene,
-            sala: sala
-        };
-    }
 }
 exports.Fakultet = Fakultet;

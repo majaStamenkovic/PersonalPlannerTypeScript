@@ -36,14 +36,4 @@ export class Fakultet{
     get obaveza():IFakultetModel{
         return this._fakultetModel;
     }
-    public static createLekcija(nazivPredmeta:string,nazivAktivnosti:string,datumIVreme:string,brojLekcije?:number,sala?:string,napomene?:string):IFakultetModel{
-        return <IFakultetModel>{
-            nazivPredmeta: nazivPredmeta,
-            nazivAktivnosti: nazivAktivnosti,
-            brojLekcije: brojLekcije,
-            datumIVreme:new Date(datumIVreme),
-            napomene:napomene,
-            sala:sala
-        }
-    }
 }

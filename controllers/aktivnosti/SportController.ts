@@ -3,7 +3,6 @@ import { SportRepository } from '../../repository/aktivnosti/SportRepository';
 import { ISportModel } from '../../models/interfaces/aktivnosti/ISportModel';
 import { ObjectID } from 'bson'
 import { Sport } from '../../business/Sport';
-import { zavrsetak } from '../../helpers/DateUtil';
 import { IAktivnostiController } from './interfaces/IAktivnostiController';
 
 export class SportController implements IAktivnostiController{

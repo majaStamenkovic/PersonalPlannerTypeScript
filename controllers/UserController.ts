@@ -5,7 +5,7 @@ import { User } from '../business/User';
 import { UserRepository } from '../repository/user/UserRepository';
 import { isNullOrUndefined } from 'util';
 import * as jwt from 'jsonwebtoken';
-import { REGEX_MAIL, SECRET_KEY } from '../helpers/constants';
+import { REGEX_MAIL, SECRET_KEY, TRAJANJE_TOKENA } from '../helpers/constants';
 
 export class UserController {
 
@@ -76,7 +76,7 @@ export class UserController {
             const token = jwt.sign({
                 username: postojiUser.username,
                 userId: postojiUser._id
-            }, SECRET_KEY, { expiresIn: "1h" });
+            }, SECRET_KEY, { expiresIn: TRAJANJE_TOKENA });
             res.status(200).send({ "poruka": "Autentikacija uspesna", "token": token });
 
         } catch (error) {
